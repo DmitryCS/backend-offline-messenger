@@ -11,6 +11,7 @@ class ResponseUserDtoSchema(Schema):
     update_at = fields.DateTime(required=True)
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
+    login = fields.Str(required=True)
 
     @pre_load
     @post_load
