@@ -3,6 +3,7 @@ from sanic.response import BaseHTTPResponse
 
 from api.request import RequestCreateUserDto
 from api.response import ResponseUserDto
+from db.database import DBSession
 from transport.sanic.endpoints import BaseEndpoint
 
 from db.queries import user as user_queries
@@ -10,7 +11,7 @@ from db.queries import user as user_queries
 
 class CreateUserEndpoint(BaseEndpoint):
 
-    async def method_post(self, request: Request, body: dict, session, *args, **kwargs) -> BaseHTTPResponse:
+    async def method_post(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:
 
         request_model = RequestCreateUserDto(body)
 
