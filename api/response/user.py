@@ -5,7 +5,17 @@ from marshmallow import Schema, fields, pre_load, post_load
 from api.base import ResponseDto
 
 
-class ResponseUserDtoSchema(Schema):
+class ResponseGetUserDtoSchema(Schema):
+    first_name = fields.Str(required=True)
+    last_name = fields.Str(required=True)
+    login = fields.Str(required=True)
+
+
+class ResponseGetUserDto(ResponseDto, ResponseGetUserDtoSchema):
+    __schema__ = ResponseGetUserDtoSchema
+
+
+class ResponseCreateUserDtoSchema(Schema):
     pass
     # id = fields.Int(required=True)
     # created_at = fields.DateTime(required=True)
@@ -31,5 +41,5 @@ class ResponseUserDtoSchema(Schema):
     #     return dt
 
 
-class ResponseUserDto(ResponseDto, ResponseUserDtoSchema):
-    __schema__ = ResponseUserDtoSchema
+class ResponseCreateUserDto(ResponseDto, ResponseCreateUserDtoSchema):
+    __schema__ = ResponseCreateUserDtoSchema

@@ -1,2 +1,2 @@
-from .create_user import RequestCreateUserDto
-from .get_user import RequestGetUserDto
+from .user import RequestCreateUserDto
+from .user import RequestGetUserDto
