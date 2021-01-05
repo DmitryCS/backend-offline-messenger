@@ -40,6 +40,18 @@ class ResponseDto:
             and not prop.endswith('_')
             and not callable(value := getattr(obj, prop))
         }
+
+        if type(obj) == list:
+            for obj_of_list in list(obj):
+                for prop in dir(obj_of_list):
+                    if not prop.startswith('_') and not prop.endswith('_'):
+                        attr = getattr(obj_of_list, prop)
+                        if not callable(attr):
+                            if prop in properties:
+                                properties[prop].append(attr)
+                            else:
+                                properties[prop] = [attr]
+
         try:
             self._data = self.__schema__(unknown=EXCLUDE).load(properties)
         except ValidationError as error:

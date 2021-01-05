@@ -12,6 +12,17 @@ from db.queries import user as user_queries
 
 class UserEndpoint(BaseEndpoint):
 
+    async def method_post(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:
+
+        request_model = RequestCreateUserDto(body)
+
+        db_user = user_queries.create_user(session, request_model)
+        session.commit_session()
+
+        response_model = ResponseCreateUserDto(db_user)
+
+        return await self.make_response_json(body=response_model.dump(), status=201)
+
     async def method_get(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:
 
         request_model = RequestGetUserDto(body)
@@ -23,17 +34,6 @@ class UserEndpoint(BaseEndpoint):
         response_model = ResponseGetUserDto(db_user)
 
         return await self.make_response_json(body=response_model.dump(), status=200)
-
-    async def method_post(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:
-
-        request_model = RequestCreateUserDto(body)
-
-        db_user = user_queries.create_user(session, request_model)
-        session.commit_session()
-
-        response_model = ResponseCreateUserDto(db_user)
-
-        return await self.make_response_json(body=response_model.dump(), status=201)
 
     async def method_patch(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:
 
