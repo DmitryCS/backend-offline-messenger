@@ -1,10 +1,25 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, pre_load, post_load
 
 from api.base import ResponseDto
 
 
 class ResponseCreateUserDtoSchema(Schema):
-    pass
+    id = fields.Int(required=True)
+    login = fields.Str(required=True)
+    created_at = fields.Str(required=True)
+    updated_at = fields.Str(required=True)
+    first_name = fields.Str(required=True)
+    last_name = fields.Str(required=True)
+
+    @pre_load
+    @post_load
+    def serialize_datetime(self, data: dict, **kwargs) -> dict:
+        if 'created_at' in data:
+            data['created_at'] = str(data['created_at'])
+        if 'updated_at' in data:
+            data['updated_at'] = str(data['updated_at'])
+
+        return data
 
 
 class ResponseCreateUserDto(ResponseDto, ResponseCreateUserDtoSchema):
@@ -12,9 +27,21 @@ class ResponseCreateUserDto(ResponseDto, ResponseCreateUserDtoSchema):
 
 
 class ResponseGetUserDtoSchema(Schema):
+    login = fields.Str(required=True)
+    created_at = fields.Str(required=True)
+    updated_at = fields.Str(required=True)
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
-    login = fields.Str(required=True)
+
+    @pre_load
+    @post_load
+    def serialize_datetime(self, data: dict, **kwargs) -> dict:
+        if 'created_at' in data:
+            data['created_at'] = str(data['created_at'])
+        if 'updated_at' in data:
+            data['updated_at'] = str(data['updated_at'])
+
+        return data
 
 
 class ResponseGetUserDto(ResponseDto, ResponseGetUserDtoSchema):
@@ -22,7 +49,22 @@ class ResponseGetUserDto(ResponseDto, ResponseGetUserDtoSchema):
 
 
 class ResponsePatchUserDtoSchema(Schema):
-    pass
+    id = fields.Int(required=True)
+    login = fields.Str(required=True)
+    created_at = fields.Str(required=True)
+    updated_at = fields.Str(required=True)
+    first_name = fields.Str(required=True)
+    last_name = fields.Str(required=True)
+
+    @pre_load
+    @post_load
+    def serialize_datetime(self, data: dict, **kwargs) -> dict:
+        if 'created_at' in data:
+            data['created_at'] = str(data['created_at'])
+        if 'updated_at' in data:
+            data['updated_at'] = str(data['updated_at'])
+
+        return data
 
 
 class ResponsePatchUserDto(ResponseDto, ResponsePatchUserDtoSchema):

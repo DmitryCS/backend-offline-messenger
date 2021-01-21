@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import sessionmaker, Session
 
 from db.exceptions import DBIntegrityException, DBDataException
-from db.models import BaseModel
+from db.models import BaseModel, DBUser
 
 
 class DBSession:
@@ -25,6 +25,12 @@ class DBSession:
             raise DBIntegrityException(e)
         except DataError as e:
             raise DBDataException(e)
+
+    def get_user_by_login(self, login: str) -> DBUser:
+        return self._session.query(DBUser).filter(DBUser.login == login).first()
+
+    def get_user_by_id(self, uid: int) -> DBUser:
+        return self._session.query(DBUser).filter(DBUser.id == uid).first()
 
     def commit_session(self, need_close: bool = False):
         try:

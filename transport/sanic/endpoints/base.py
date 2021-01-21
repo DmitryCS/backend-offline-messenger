@@ -1,7 +1,7 @@
+from sanic.exceptions import SanicException
 from sanic.request import Request
 from sanic.response import BaseHTTPResponse
 
-from api.exceptions import ValidationException
 from transport.sanic.base import SanicEndpoint
 
 
@@ -15,5 +15,5 @@ class BaseEndpoint(SanicEndpoint):
         try:
             return await super()._method(request, body, session, *args, **kwargs)
 
-        except ValidationException as e:
+        except SanicException as e:
             return await self.make_response_json(status=e.status_code, message=str(e))

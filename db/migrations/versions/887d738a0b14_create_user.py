@@ -1,8 +1,8 @@
 """Create User
 
-Revision ID: baf9a7b2da13
+Revision ID: 887d738a0b14
 Revises: 
-Create Date: 2021-01-03 15:31:53.318794
+Create Date: 2021-01-20 22:40:43.930375
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'baf9a7b2da13'
+revision = '887d738a0b14'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,13 +21,14 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('created_at', sa.TIMESTAMP(), nullable=False),
-    sa.Column('update_at', sa.TIMESTAMP(), nullable=False),
+    sa.Column('updated_at', sa.TIMESTAMP(), nullable=False),
     sa.Column('first_name', sa.VARCHAR(length=50), nullable=True),
     sa.Column('last_name', sa.VARCHAR(length=50), nullable=True),
-    sa.Column('login', sa.VARCHAR(length=50), nullable=True),
-    sa.Column('password', sa.VARCHAR(length=100), nullable=True),
+    sa.Column('login', sa.VARCHAR(length=50), nullable=False),
+    sa.Column('password', sa.VARBINARY(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('id')
+    sa.UniqueConstraint('id'),
+    sa.UniqueConstraint('login')
     )
     # ### end Alembic commands ###
 

@@ -1,8 +1,8 @@
 """Create Message
 
-Revision ID: ff19733b50fc
-Revises: baf9a7b2da13
-Create Date: 2021-01-05 17:09:47.622946
+Revision ID: ed97333914eb
+Revises: 887d738a0b14
+Create Date: 2021-01-20 22:41:38.711001
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ff19733b50fc'
-down_revision = 'baf9a7b2da13'
+revision = 'ed97333914eb'
+down_revision = '887d738a0b14'
 branch_labels = None
 depends_on = None
 
@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('messages',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('created_at', sa.TIMESTAMP(), nullable=False),
-    sa.Column('update_at', sa.TIMESTAMP(), nullable=False),
+    sa.Column('updated_at', sa.TIMESTAMP(), nullable=False),
     sa.Column('id_sender', sa.Integer(), nullable=False),
     sa.Column('id_recipient', sa.Integer(), nullable=False),
     sa.Column('content_message', sa.VARCHAR(length=4096), nullable=True),
