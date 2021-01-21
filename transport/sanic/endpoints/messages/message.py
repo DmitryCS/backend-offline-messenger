@@ -15,24 +15,25 @@ class MessageEndpoint(BaseEndpoint):
 
         request_model = RequestCreateMessageDto(body)
 
-        db_message = message_queries.create_message(session, request_model)
+        message = message_queries.create_message(session, request_model, body['uid'])
         session.commit_session()
 
-        response_model = ResponseCreateMessageDto(db_message)
+        response_model = ResponseCreateMessageDto(message)
 
         return await self.make_response_json(body=response_model.dump(), status=201)
 
     async def method_get(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:
 
-        request_model = RequestGetMessageDto(body)
+        # request_model = RequestGetMessageDto(body)
 
-        db_messages = message_queries.get_messages(session, request_model)
-        db_content_messages = [GetMes(mes.content_message) for mes in db_messages]
+        db_messages = message_queries.get_messages(session, body['uid'])
+        # db_content_messages = [GetMes(mes.content_message) for mes in db_messages]
 
         session.commit_session()
 
         # db_message = DBMessage(content_message='assa')
-        response_model = ResponseGetMessageDto(db_content_messages)
+        # response_model = ResponseGetMessageDto(db_content_messages)
+        response_model = ResponseGetMessageDto(db_messages, many=True)
         # GetMes('fsdfsd')
         return await self.make_response_json(body=response_model.dump(), status=200)
 

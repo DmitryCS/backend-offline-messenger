@@ -23,17 +23,17 @@ class AuthUserEndpoint(BaseEndpoint):
         request_model = RequestAuthUserDto(body)
 
         try:
-            db_employee = user_queries.get_user(session, login=request_model.login)
+            db_user = user_queries.get_user(session, login=request_model.login)
         except DBUserNotExistsException:
-            raise SanicUserNotFound('Employee not found')
+            raise SanicUserNotFound('User not found')
 
         try:
-            check_hash(request_model.password, db_employee.password)
+            check_hash(request_model.password, db_user.password)
         except CheckPasswordHashException:
             raise SanicPasswordHashException('Wrong password')
 
         payload = {
-            'eid': db_employee.id,
+            'uid': db_user.id,
         }
 
         token = create_token(payload)

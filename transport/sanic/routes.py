@@ -15,7 +15,7 @@ def get_routes(config: ApplicationConfig, context: Context) -> tuple:
             config, context, uri='/auth', methods=['POST']
         ),
         endpoints.MessageEndpoint(
-            config=config, context=context, uri='/msg', methods=('GET', 'POST')
+            config=config, context=context, uri='/msg', methods=('GET', 'POST'), auth_required=True
         ),
         endpoints.UserEndpoint(
             config, context, uri='/user/<uid:int>', methods=('GET', 'PATCH'), auth_required=True

@@ -1,9 +1,12 @@
+from typing import List
+
+from sqlalchemy import or_
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import sessionmaker, Session
 
 from db.exceptions import DBIntegrityException, DBDataException
-from db.models import BaseModel, DBUser
+from db.models import BaseModel, DBUser, DBMessage
 
 
 class DBSession:
@@ -31,6 +34,10 @@ class DBSession:
 
     def get_user_by_id(self, uid: int) -> DBUser:
         return self._session.query(DBUser).filter(DBUser.id == uid).first()
+
+    def get_all_messages(self, uid: int) -> List[DBMessage]:
+        return self._session.query(DBMessage).filter(or_(DBMessage.recipient_id == uid,
+                                                         DBMessage.sender_id == uid)).all()
 
     def commit_session(self, need_close: bool = False):
         try:

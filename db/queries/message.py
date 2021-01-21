@@ -6,13 +6,13 @@ from db.models import DBUser
 from db.models.message import DBMessage
 
 
-def create_message(session: DBSession, message: RequestCreateMessageDto) -> DBMessage:
-    recipient = session.query(DBUser).filter_by(login=message.recipient).first().id
+def create_message(session: DBSession, request_dto_message: RequestCreateMessageDto, user_id: int) -> DBMessage:
+    recipient = session.get_user_by_login(request_dto_message.recipient)
 
     new_message = DBMessage(
-        id_sender=4,
-        id_recipient=recipient,
-        content_message=message.message,
+        sender_id=user_id,
+        recipient_id=recipient.id,
+        message=request_dto_message.message,
     )
 
     session.add_model(new_message)
@@ -20,8 +20,8 @@ def create_message(session: DBSession, message: RequestCreateMessageDto) -> DBMe
     return new_message
 
 
-def get_messages(session: DBSession, message: RequestGetMessageDto) -> List[DBMessage]:
+def get_messages(session: DBSession, user_id: int) -> List[DBMessage]:
 
-    list_messages = session.query(DBMessage).filter_by(id_recipient=5).all()
+    list_messages = session.get_all_messages(user_id) #session.query(DBMessage).filter_by(id_recipient=5).all()
 
     return list_messages

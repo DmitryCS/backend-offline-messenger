@@ -1,8 +1,8 @@
 """Create Message
 
-Revision ID: ed97333914eb
+Revision ID: 5a38af9a0167
 Revises: 887d738a0b14
-Create Date: 2021-01-20 22:41:38.711001
+Create Date: 2021-01-21 13:22:47.971016
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ed97333914eb'
+revision = '5a38af9a0167'
 down_revision = '887d738a0b14'
 branch_labels = None
 depends_on = None
@@ -22,11 +22,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('created_at', sa.TIMESTAMP(), nullable=False),
     sa.Column('updated_at', sa.TIMESTAMP(), nullable=False),
-    sa.Column('id_sender', sa.Integer(), nullable=False),
-    sa.Column('id_recipient', sa.Integer(), nullable=False),
-    sa.Column('content_message', sa.VARCHAR(length=4096), nullable=True),
-    sa.ForeignKeyConstraint(['id_recipient'], ['users.id'], ),
-    sa.ForeignKeyConstraint(['id_sender'], ['users.id'], ),
+    sa.Column('sender_id', sa.Integer(), nullable=False),
+    sa.Column('recipient_id', sa.Integer(), nullable=False),
+    sa.Column('message', sa.VARCHAR(length=4096), nullable=True),
+    sa.ForeignKeyConstraint(['recipient_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['sender_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('id')
     )
