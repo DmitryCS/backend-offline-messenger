@@ -18,3 +18,28 @@ class RequestGetMessageDtoSchema(Schema):
 
 class RequestGetMessageDto(RequestDto, RequestGetMessageDtoSchema):
     __schema__ = RequestGetMessageDtoSchema
+
+
+class RequestPatchMessageDtoSchema(Schema):
+    message = fields.Str(required=True, allow_none=False)
+
+
+class RequestPatchMessageDto(RequestDto, RequestPatchMessageDtoSchema):
+    fields: list
+    __schema__ = RequestPatchMessageDtoSchema
+
+    def __init__(self, *args, **kwargs):
+        self.fields = []
+        super(RequestPatchMessageDto, self).__init__(*args, **kwargs)
+
+    def set(self, key, value):
+        self.fields.append(key)
+        super(RequestPatchMessageDto, self).set(key, value)
+
+
+class RequestDeleteMessageDtoSchema(Schema):
+    pass
+
+
+class RequestDeleteMessageDto(RequestDto, RequestDeleteMessageDtoSchema):
+    __schema__ = RequestDeleteMessageDtoSchema

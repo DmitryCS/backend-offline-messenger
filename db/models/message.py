@@ -1,4 +1,4 @@
-from sqlalchemy import Column, VARCHAR, Integer, ForeignKey
+from sqlalchemy import Column, VARCHAR, Integer, ForeignKey, BOOLEAN
 
 from db.models import BaseModel
 
@@ -17,4 +17,11 @@ class DBMessage(BaseModel):
         ForeignKey('users.id'),
         nullable=False,
     )
-    message = Column(VARCHAR(4096))
+    message = Column(
+        VARCHAR(4096)
+    )
+    is_delete = Column(
+        BOOLEAN(),
+        nullable=False,
+        default=False
+    )

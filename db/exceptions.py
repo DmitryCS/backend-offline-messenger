@@ -12,3 +12,7 @@ class DBUserExistsException(Exception):
 
 class DBUserNotExistsException(Exception):
     pass
+
+
+class DBMessageNotExistsException(Exception):
+    pass

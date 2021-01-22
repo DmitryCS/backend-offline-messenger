@@ -35,6 +35,12 @@ class DBSession:
     def get_user_by_id(self, uid: int) -> DBUser:
         return self._session.query(DBUser).filter(DBUser.id == uid).first()
 
+    def get_message_by_id(self, message_id: int) -> DBMessage:
+        return self._session.query(DBMessage).filter(DBMessage.id == message_id).first()
+
+    def get_message(self, message_id: int) -> DBMessage:
+        return self._session.query(DBMessage).filter(DBMessage.id == message_id).first()
+
     def get_all_messages(self, uid: int) -> List[DBMessage]:
         return self._session.query(DBMessage).filter(or_(DBMessage.recipient_id == uid,
                                                          DBMessage.sender_id == uid)).all()

@@ -49,3 +49,19 @@ class ResponseGetMessageDtoSchema(Schema):
 
 class ResponseGetMessageDto(ResponseDto, ResponseGetMessageDtoSchema):
     __schema__ = ResponseGetMessageDtoSchema
+
+
+class ResponsePatchMessageDtoSchema(Schema):
+    pass
+
+
+class ResponsePatchMessageDto(ResponseDto, ResponsePatchMessageDtoSchema):
+    __schema__ = ResponsePatchMessageDtoSchema
+
+
+class ResponseDeleteMessageDtoSchema(Schema):
+    pass
+
+
+class ResponseDeleteMessageDto(ResponseDto, ResponseDeleteMessageDtoSchema):
+    __schema__ = ResponseDeleteMessageDtoSchema
