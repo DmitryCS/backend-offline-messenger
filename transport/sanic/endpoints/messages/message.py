@@ -57,8 +57,8 @@ class MessageEndpoint(BaseEndpoint):
         if db_message is None:
             raise SanicMessageNotFound('Message not found')
 
-        if body['uid'] not in (db_message.sender_id, db_message.recipient_id):
-            raise SanicUserConflictException("This is not your message")
+        if body['uid'] != db_message.recipient_id:
+            raise SanicUserConflictException("This message is not for you")
 
         try:
             session.commit_session()
