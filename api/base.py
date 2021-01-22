@@ -1,4 +1,4 @@
-from marshmallow import ValidationError, Schema, EXCLUDE
+from marshmallow import ValidationError, Schema, EXCLUDE, pre_load
 
 from api.exceptions import ApiValidationException, ApiResponseValidationException
 
@@ -26,35 +26,10 @@ class ResponseDto:
     __schema__: Schema
 
     def __init__(self, obj: object, many: bool = False):
-        # properties = {}
-        # for prop in dir(obj):
-        #     if not prop.startswith('_') and not prop.endswith('_'):
-        #         attr = getattr(obj, prop)
-        #         if not callable(attr):
-        #             valid_data['prop'] = attr
         if many:
             properties = [self.parse_obj(o) for o in obj]
         else:
             properties = self.parse_obj(obj)
-
-        # properties = {
-        #     prop: value
-        #     for prop in dir(obj)
-        #     if not prop.startswith('_')
-        #     and not prop.endswith('_')
-        #     and not callable(value := getattr(obj, prop))
-        # }
-
-        # if type(obj) == list:
-        #     for obj_of_list in list(obj):
-        #         for prop in dir(obj_of_list):
-        #             if not prop.startswith('_') and not prop.endswith('_'):
-        #                 attr = getattr(obj_of_list, prop)
-        #                 if not callable(attr):
-        #                     if prop in properties:
-        #                         properties[prop].append(attr)
-        #                     else:
-        #                         properties[prop] = [attr]
 
         try:
             self._data = self.__schema__(unknown=EXCLUDE, many=many).load(properties)
@@ -73,3 +48,14 @@ class ResponseDto:
 
     def dump(self) -> dict:
         return self._data
+
+
+class Serialization:
+    @pre_load
+    def serialize_datetime(self, data: dict, **kwargs) -> dict:
+        if 'created_at' in data:
+            data['created_at'] = str(data['created_at'])
+        if 'updated_at' in data:
+            data['updated_at'] = str(data['updated_at'])
+
+        return data

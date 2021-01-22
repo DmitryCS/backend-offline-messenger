@@ -1,8 +1,7 @@
 from sanic.request import Request
 from sanic.response import BaseHTTPResponse
 
-from api.request.auth_user import AuthResponseObject
-from api.response.auth_user import ResponseAuthUserDto
+from api.response.auth_user import ResponseAuthUserDto, AuthResponseObject
 from transport.sanic.endpoints import BaseEndpoint
 from transport.sanic.exceptions import SanicUserNotFound, SanicPasswordHashException
 

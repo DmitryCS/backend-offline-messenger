@@ -7,7 +7,7 @@ from db.database import DBSession
 from db.exceptions import DBMessageNotExistsException, DBDataException, DBIntegrityException
 from db.queries import message as message_queries
 from transport.sanic.endpoints import BaseEndpoint
-from transport.sanic.exceptions import SanicMessageNotFound, SanicDBException
+from transport.sanic.exceptions import SanicMessageNotFound, SanicDBException, SanicUserConflictException
 
 
 class MessageEndpoint(BaseEndpoint):
@@ -19,7 +19,7 @@ class MessageEndpoint(BaseEndpoint):
         request_model = RequestPatchMessageDto(body)
 
         try:
-            message = message_queries.patch_message(session, request_model, message_id)
+            message = message_queries.patch_message(session, request_model, message_id, body['uid'])
         except DBMessageNotExistsException:
             raise SanicMessageNotFound('Message not found')
 
@@ -37,7 +37,7 @@ class MessageEndpoint(BaseEndpoint):
     ) -> BaseHTTPResponse:
 
         try:
-            message_queries.delete_message(session, message_id)
+            message_queries.delete_message(session, message_id, body['uid'])
         except DBMessageNotExistsException as e:
             raise SanicDBException(str(e))
 
@@ -56,6 +56,9 @@ class MessageEndpoint(BaseEndpoint):
 
         if db_message is None:
             raise SanicMessageNotFound('Message not found')
+
+        if body['uid'] not in (db_message.sender_id, db_message.recipient_id):
+            raise SanicUserConflictException("This is not your message")
 
         try:
             session.commit_session()

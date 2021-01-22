@@ -1,5 +1,4 @@
-from api.request import RequestCreateUserDto, RequestGetUserDto, RequestPatchUserDto
-from api.request.user import RequestPatchUserDtoSchema
+from api.request import RequestCreateUserDto, RequestPatchUserDto
 from db.database import DBSession
 from db.exceptions import DBUserExistsException, DBUserNotExistsException
 from db.models import DBUser
@@ -39,9 +38,5 @@ def patch_user(session: DBSession, user: RequestPatchUserDto, user_id: int) -> D
     for attr in user.fields:
         value = getattr(user, attr)
         setattr(db_user, attr, value)
-
-    # user_dict = RequestPatchUserDtoSchema().dump(user)
-    #
-    # session.query(DBUser).filter(DBUser.login == 'andrew@gmail.com').update(user_dict)
 
     return db_user
