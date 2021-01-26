@@ -1,0 +1,148 @@
+{
+	"variables": [],
+	"info": {
+		"name": "backend-offline-messenger",
+		"_postman_id": "3d1bb94a-2800-f670-5ac0-11ab7d61d69a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get /",
+			"request": {
+				"url": "http://127.0.0.1:8000",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "post /user",
+			"request": {
+				"url": "http://127.0.0.1:8000/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\": \"Dmitry\",\n\t\"last_name\": \"Born\",\n\t\"login\": \"dmitry@gmail.com\",\n\t\"password\": \"qwerty12345\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get /msg",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get /user",
+			"request": {
+				"url": "http://127.0.0.1:8000/user",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "patch /user",
+			"request": {
+				"url": "http://127.0.0.1:8000/user",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\": \"Andrew\",\n\t\"last_name\": \"Born2\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "post /msg",
+			"request": {
+				"url": "http://127.0.0.1:8000/msg",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"recipient\": \"dmitry@gmail.com\",\n\t\"message\": \"Hello, Dmitry. Сan you drop the link to the edits?\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "post /auth",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "patch /msg/<message_id:int>",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete /msg/<message_id:int>",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get /msg/<message_id:int>",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
