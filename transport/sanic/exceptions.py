@@ -32,3 +32,6 @@ class SanicUserNotFound(SanicException):
 class SanicMessageNotFound(SanicException):
     status_code = 404
 
+
+class SanicMessageDeleted(SanicException):
+    status_code = 404

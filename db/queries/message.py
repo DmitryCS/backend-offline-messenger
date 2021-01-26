@@ -3,13 +3,15 @@ from typing import List
 from api.request import RequestCreateMessageDto
 from api.request.message import RequestPatchMessageDto
 from db.database import DBSession
+from db.exceptions import DBUserNotExistsException
 from db.models.message import DBMessage
 from transport.sanic.exceptions import SanicUserConflictException, SanicDBException
 
 
 def create_message(session: DBSession, request_dto_message: RequestCreateMessageDto, user_id: int) -> DBMessage:
     recipient = session.get_user_by_login(request_dto_message.recipient)
-
+    if recipient is None:
+        raise DBUserNotExistsException
     new_message = DBMessage(
         sender_id=user_id,
         recipient_id=recipient.id,
