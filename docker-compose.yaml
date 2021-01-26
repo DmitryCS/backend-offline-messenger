@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  server:
+    build: .
+    container_name: messenger-app
+    ports:
+      - "8000:8000"
+    command: sh -c "cd /backend-offline-messenger
+             && alembic upgrade head
+             && python main.py"
+    env_file:
+      - .env
+    depends_on:
+      - "database"
+    restart: always
+
+  database:
+    image: postgres
+    container_name: messenger-db
+    env_file:
+      - .env
+    restart: always

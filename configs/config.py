@@ -1,11 +1,13 @@
-from db.config import SQLiteConfig
+from db.config import SQLiteConfig, PostgresConfig
 from transport.sanic.config import SanicConfig
 
 
 class ApplicationConfig:
     sanic: SanicConfig
-    database: SQLiteConfig
+    database: PostgresConfig
+    # database: SQLiteConfig
 
     def __init__(self):
         self.sanic = SanicConfig()
-        self.database = SQLiteConfig()
+        # self.database = SQLiteConfig()
+        self.database = PostgresConfig()
