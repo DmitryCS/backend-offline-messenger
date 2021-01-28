@@ -14,7 +14,9 @@ from transport.sanic.exceptions import SanicUserConflictException, SanicDBExcept
 
 class UserEndpoint(BaseEndpoint):
 
-    async def method_get(self, request: Request, body: dict, session: DBSession, uid: int, *args, **kwargs) -> BaseHTTPResponse:
+    async def method_get(
+            self, request: Request, body: dict, session: DBSession, uid: int, *args, **kwargs
+    ) -> BaseHTTPResponse:
 
         if body['uid'] != uid:
             raise SanicUserConflictException("This is not your user")
@@ -22,16 +24,14 @@ class UserEndpoint(BaseEndpoint):
             user = user_queries.get_user(session, user_id=uid)
         except DBUserNotExistsException:
             raise SanicUserNotFound('User not found')
-        try:
-            session.commit_session()
-        except (DBDataException, DBIntegrityException) as e:
-            raise SanicDBException(str(e))
 
         response_model = ResponseGetUserDto(user)
 
         return await self.make_response_json(body=response_model.dump(), status=200)
 
-    async def method_patch(self, request: Request, body: dict, session: DBSession, uid: int, *args, **kwargs) -> BaseHTTPResponse:
+    async def method_patch(
+            self, request: Request, body: dict, session: DBSession, uid: int, *args, **kwargs
+    ) -> BaseHTTPResponse:
 
         if body['uid'] != uid:
             raise SanicUserConflictException("This is not your user")

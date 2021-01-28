@@ -25,7 +25,6 @@ class RequestGetUserDto(RequestDto, RequestGetUserDtoSchema):
 class RequestPatchUserDtoSchema(Schema):
     first_name = fields.Str(required=False, allow_none=False)
     last_name = fields.Str(required=False, allow_none=False)
-    # password = fields.Str(required=False, allow_none=False)
 
 
 class RequestPatchUserDto(RequestDto, RequestPatchUserDtoSchema):

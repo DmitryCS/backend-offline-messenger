@@ -39,7 +39,4 @@ class AuthUserEndpoint(BaseEndpoint):
         response = AuthResponseObject(token)
         response_model = ResponseAuthUserDto(response)
 
-        return await self.make_response_json(
-            body=response_model.dump(),
-            status=200,
-        )
+        return await self.make_response_json(body=response_model.dump(), status=200)

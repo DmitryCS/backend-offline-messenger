@@ -12,8 +12,13 @@ secret = os.getenv('secret_key', 'SUPER_SECRET_KEY')
 token_lifetime = int(os.getenv('token_lifetime_days', 1))
 
 
-def create_token(payload: dict) -> str:
-    payload['exp'] = datetime.datetime.utcnow() + datetime.timedelta(days=token_lifetime)
+def create_token(data: dict, *, lifetime: int = None) -> str:
+    if lifetime is None:
+        lifetime = token_lifetime
+    payload = {
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=lifetime),
+    }
+    payload.update(data)
     return jwt.encode(payload, secret, algorithm='HS256')
 
 

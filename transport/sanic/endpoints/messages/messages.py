@@ -33,11 +33,6 @@ class MessagesEndpoint(BaseEndpoint):
 
         db_messages = message_queries.get_messages(session, body['uid'])
 
-        try:
-            session.commit_session()
-        except (DBDataException, DBIntegrityException) as e:
-            raise SanicDBException(str(e))
-
         response_model = ResponseGetMessageDto(db_messages, many=True)
 
         return await self.make_response_json(body=response_model.dump(), status=200)

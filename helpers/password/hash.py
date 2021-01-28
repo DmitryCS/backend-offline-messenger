@@ -23,13 +23,3 @@ def check_hash(pwd: str, hsh: bytes) -> None:
         raise CheckPasswordHashException(str(e))
     if not result:
         raise CheckPasswordHashException
-
-
-if __name__ == '__main__':
-    password = 'qwerty'
-    password2 = 'qwerty'
-    password3 = 'qwerty1'
-    hsh_ = generate_hash(password)
-
-    print(check_hash(password2, hsh_))
-    print(check_hash(password3, hsh_))

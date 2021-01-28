@@ -1,6 +1,5 @@
 from typing import List
 
-from sqlalchemy import or_
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import sessionmaker, Session

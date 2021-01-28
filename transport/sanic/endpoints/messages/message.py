@@ -2,13 +2,17 @@ from sanic.request import Request
 from sanic.response import BaseHTTPResponse
 
 from api.request.message import RequestPatchMessageDto
-from api.response.message import ResponsePatchMessageDto, ResponseGetMessageDto, ResponseDeleteMessageDtoSchema
+from api.response.message import ResponsePatchMessageDto, ResponseGetMessageDto
 from db.database import DBSession
 from db.exceptions import DBMessageNotExistsException, DBDataException, DBIntegrityException
 from db.queries import message as message_queries
 from transport.sanic.endpoints import BaseEndpoint
-from transport.sanic.exceptions import SanicMessageNotFound, SanicDBException, SanicUserConflictException, \
+from transport.sanic.exceptions import (
+    SanicMessageNotFound,
+    SanicDBException,
+    SanicUserConflictException,
     SanicMessageDeleted
+)
 
 
 class MessageEndpoint(BaseEndpoint):
@@ -63,11 +67,6 @@ class MessageEndpoint(BaseEndpoint):
 
         if body['uid'] != db_message.recipient_id:
             raise SanicUserConflictException('This message is not for you')
-
-        try:
-            session.commit_session()
-        except (DBDataException, DBIntegrityException) as e:
-            raise SanicDBException(str(e))
 
         response_model = ResponseGetMessageDto(db_message)
 
