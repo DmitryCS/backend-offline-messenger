@@ -15,37 +15,38 @@ from transport.sanic.exceptions import SanicUserConflictException, SanicDBExcept
 class UserEndpoint(BaseEndpoint):
 
     async def method_get(
-            self, request: Request, body: dict, session: DBSession, uid: int, *args, **kwargs
+            self, request: Request, body: dict, session: DBSession, uid: int = None, ulogin: str = None, *args, **kwargs
     ) -> BaseHTTPResponse:
-
-        if body['uid'] != uid:
-            raise SanicUserConflictException("This is not your user")
         try:
-            user = user_queries.get_user(session, user_id=uid)
+            user = user_queries.get_user(session, user_id=uid, login=ulogin)
         except DBUserNotExistsException:
             raise SanicUserNotFound('User not found')
+
+        if body['uid'] != user.id:
+            raise SanicUserConflictException("This is not your user")
 
         response_model = ResponseGetUserDto(user)
 
         return await self.make_response_json(body=response_model.dump(), status=200)
 
     async def method_patch(
-            self, request: Request, body: dict, session: DBSession, uid: int, *args, **kwargs
+            self, request: Request, body: dict, session: DBSession, uid: int = None, ulogin: str = None, *args, **kwargs
     ) -> BaseHTTPResponse:
+        try:
+            user = user_queries.get_user(session, user_id=uid, login=ulogin)
+        except DBUserNotExistsException:
+            raise SanicUserNotFound('User not found')
 
-        if body['uid'] != uid:
+        if body['uid'] != user.id:
             raise SanicUserConflictException("This is not your user")
 
         request_model = RequestPatchUserDto(body)
-        try:
-            user = user_queries.patch_user(session, request_model, uid)
-        except DBUserNotExistsException:
-            raise SanicUserNotFound('User not found')
+        patched_user = user_queries.patch_user(session, request_model, user.id)
         try:
             session.commit_session()
         except (DBDataException, DBIntegrityException) as e:
             raise SanicDBException(str(e))
 
-        response_model = ResponsePatchUserDto(user)
+        response_model = ResponsePatchUserDto(patched_user)
 
         return await self.make_response_json(body=response_model.dump(), status=200)

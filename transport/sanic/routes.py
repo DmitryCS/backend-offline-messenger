@@ -18,6 +18,10 @@ def get_routes(config: ApplicationConfig, context: Context) -> tuple:
             config, context, uri='/user/<uid:int>', methods=('GET', 'PATCH'),
             auth_required=True
         ),
+        endpoints.UserEndpoint(
+            config, context, uri='/user/<ulogin:string>', methods=('GET', 'PATCH'),
+            auth_required=True
+        ),
         endpoints.MessagesEndpoint(
             config=config, context=context, uri='/msg', methods=('GET', 'POST'),
             auth_required=True
