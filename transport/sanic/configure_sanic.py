@@ -1,4 +1,5 @@
 from sanic import Sanic
+from sanic_openapi import swagger_blueprint
 
 from configs.config import ApplicationConfig
 from context import Context
@@ -11,6 +12,7 @@ def configure_app(config: ApplicationConfig, context: Context):
     init_db_sqlite(config, context)
 
     app = Sanic(__name__)
+    app.blueprint(swagger_blueprint)
 
     for handler in get_routes(config, context):
         app.add_route(

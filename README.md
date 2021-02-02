@@ -10,4 +10,5 @@ Clone the repository or just download [.env](https://raw.githubusercontent.com/D
 Clone the repository. Execute commands [init.sql](https://raw.githubusercontent.com/DmitryCS/backend-offline-messenger/master/init.sql) in your PostgreSQL. In the terminal execute `pip install -r requierements.txt` and then `alembic upgrade head`. Change `POSTGRES_HOST` in [.env](https://raw.githubusercontent.com/DmitryCS/backend-offline-messenger/master/.env) to `POSTGRES_HOST=0.0.0.0` and execute `python main.py`.
 ## Additional features
 1. The ability to get and change user data by login.
+2. In path /swagger you can see all possible routes.
 ### Postman export of request examples [here](https://github.com/DmitryCS/backend-offline-messenger/blob/master/backend-offline-messenger.postman_collection.json).
