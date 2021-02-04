@@ -77,8 +77,8 @@ class MessageEndpoint(BaseEndpoint):
     async def method_delete(
             self, request: Request, body: dict, session: DBSession, message_id: int, *args, **kwargs
     ) -> BaseHTTPResponse:
-
         file_ids = file_queries.get_file_ids_by_msd_id(session, message_id)
+
         try:
             for file_id in file_ids:
                 file_queries.delete_msg_file_relation(session, body['uid'], message_id, file_id)
@@ -89,8 +89,8 @@ class MessageEndpoint(BaseEndpoint):
 
         try:
             message_queries.delete_message(session, message_id, body['uid'])
-        except DBMessageNotExistsException as e:
-            raise SanicDBException(str(e))
+        except DBMessageNotExistsException:
+            raise SanicMessageNotFound('Message not found')
         except DBResourceOwnerException:
             raise SanicUserConflictException("This is not your message")
 
@@ -106,7 +106,7 @@ class MessageEndpoint(BaseEndpoint):
     ) -> BaseHTTPResponse:
 
         try:
-            message = message_queries.get_message(session, message_id, body['uid'])
+            message = message_queries.get_message(session, message_id)
         except DBMessageNotExistsException as e:
             raise SanicDBException(str(e))
         if message.recipient_id != body['uid']:

@@ -21,6 +21,7 @@ from transport.sanic.exceptions import (
     SanicUserConflictException
 )
 
+
 class MessagesEndpoint(BaseEndpoint):
 
     async def method_post(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:

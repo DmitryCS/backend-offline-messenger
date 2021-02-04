@@ -57,7 +57,7 @@ def delete_message(session: DBSession, message_id: int, user_id: int) -> None:
     db_message.is_delete = True
 
 
-def get_message(session: DBSession, message_id: int, user_id: int) -> DBMessage:
+def get_message(session: DBSession, message_id: int) -> DBMessage:
 
     db_message = session.get_message(message_id)
     if db_message is None:
