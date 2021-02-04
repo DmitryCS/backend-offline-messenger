@@ -14,6 +14,8 @@ async def test_get_message_endpoint(request_factory, patched_context, request_he
     )
     patched_query = mocker.patch('db.queries.message.get_message')
     patched_query.return_value = new_message
+    patched_query = mocker.patch('db.queries.file.get_file_ids_by_msd_id')
+    patched_query.return_value = []
 
     request = request_factory(
         method='get',
@@ -36,6 +38,8 @@ async def test_patch_message_endpoint(request_factory, patched_context, request_
 
     patched_query = mocker.patch('db.queries.message.patch_message')
     patched_query.return_value = new_message
+    patched_query = mocker.patch('db.queries.file.get_file_ids_by_msd_id')
+    patched_query.return_value = []
 
     json_data = {
         'message': 'Hello, lex123.'
@@ -56,6 +60,8 @@ async def test_patch_message_endpoint(request_factory, patched_context, request_
 
 @pytest.mark.asyncio
 async def test_delete_message_endpoint(request_factory, patched_context, request_header_authorization, mocker):
+    patched_query = mocker.patch('db.queries.file.get_file_ids_by_msd_id')
+    patched_query.return_value = []
     patched_query = mocker.patch('db.queries.message.delete_message')
     patched_query.return_value = None
 

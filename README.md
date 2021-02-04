@@ -11,4 +11,5 @@ Clone the repository. Execute commands [init.sql](https://raw.githubusercontent.
 ## Additional features
 1. The ability to get and change user data by login.
 2. In path /swagger you can see all possible routes.
+3. <b>Added the ability to send files along with a message. A message can have many attachments, and one file can be attached to many messages, so a many-to-many relationship has been implemented through a table 'msgs_to_files'.<b>
 ### Postman export of request examples [here](https://github.com/DmitryCS/backend-offline-messenger/blob/master/backend-offline-messenger.postman_collection.json).

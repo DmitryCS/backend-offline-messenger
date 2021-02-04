@@ -69,7 +69,13 @@ async def test_get_user_endpoint(request_factory, patched_context, request_heade
 async def test_patch_user_endpoint(request_factory, patched_context, request_header_authorization, mocker):
     password = 'qwerty'
     hsh_ = generate_hash(password)
-
+    db_user = DBUser(
+        id=1,
+        login='lex123',
+        first_name='Alexei',
+        last_name='Dori',
+        password=hsh_
+    )
     json_data = {
         'first_name': 'Lech',
         'last_name': 'Dorin',
@@ -82,13 +88,12 @@ async def test_patch_user_endpoint(request_factory, patched_context, request_hea
         json=json_data
     )
 
-    db_user = DBUser(
-        id=1,
-        login='lex123',
-        first_name=json_data['first_name'],
-        last_name=json_data['last_name'],
-        password=hsh_
-    )
+    patched_query = mocker.patch('db.queries.user.get_user')
+    patched_query.return_value = db_user
+
+    db_user.first_name = json_data['first_name']
+    db_user.last_name = json_data['last_name']
+
     patched_query = mocker.patch('db.queries.user.patch_user')
     patched_query.return_value = db_user
 

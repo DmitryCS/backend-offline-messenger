@@ -6,6 +6,7 @@ from api.base import RequestDto
 class RequestCreateMessageDtoSchema(Schema):
     message = fields.Str(required=True, allow_none=False)
     recipient = fields.Str(required=True, allow_none=False)
+    file_ids = fields.List(fields.Int)
 
 
 class RequestCreateMessageDto(RequestDto, RequestCreateMessageDtoSchema):
@@ -22,6 +23,7 @@ class RequestGetMessageDto(RequestDto, RequestGetMessageDtoSchema):
 
 class RequestPatchMessageDtoSchema(Schema):
     message = fields.Str(required=True, allow_none=False)
+    file_ids = fields.List(fields.Int)
 
 
 class RequestPatchMessageDto(RequestDto, RequestPatchMessageDtoSchema):

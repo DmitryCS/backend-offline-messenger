@@ -6,7 +6,7 @@ from transport.sanic import endpoints
 def get_routes(config: ApplicationConfig, context: Context) -> tuple:
     return (
         endpoints.HealthEndpoint(
-            config=config, context=context, uri='/', methods=['GET']
+            config=config, context=context, uri='/', methods=['GET', 'POST']
         ),
         endpoints.CreateUserEndpoint(
             config=config, context=context, uri='/user', methods=['POST']
@@ -28,6 +28,14 @@ def get_routes(config: ApplicationConfig, context: Context) -> tuple:
         ),
         endpoints.MessageEndpoint(
             config=config, context=context, uri='/msg/<message_id:int>', methods=('GET', 'PATCH', 'DELETE'),
+            auth_required=True
+        ),
+        endpoints.FilesEndpoint(
+            config=config, context=context, uri='/files/<file_id:int>', methods=['GET'],
+            auth_required=True
+        ),
+        endpoints.FilesEndpoint(
+            config=config, context=context, uri='/files', methods=['POST'],
             auth_required=True
         ),
     )

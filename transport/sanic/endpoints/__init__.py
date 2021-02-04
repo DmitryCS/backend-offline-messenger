@@ -5,3 +5,4 @@ from .messages.messages import MessagesEndpoint
 from .messages.message import MessageEndpoint
 from .users.user import UserEndpoint
 from .users.auth import AuthUserEndpoint
+from .files.file import FilesEndpoint

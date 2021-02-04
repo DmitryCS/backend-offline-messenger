@@ -8,12 +8,40 @@
 	},
 	"item": [
 		{
-			"name": "get /",
+			"name": "post /files",
 			"request": {
-				"url": "http://127.0.0.1:8000",
-				"method": "GET",
-				"header": [],
-				"body": {},
+				"url": "http://127.0.0.1:8000/files",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1NDEwNzAsInVpZCI6Mn0.hXgdlSI-J9mlZsER6gOuD2dMy5BWqKI2GYpQ3wqkUOs",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "demo.gif"
+						},
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "mask.png"
+						},
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "photo_2020-08-25_20-06-41.jpg"
+						}
+					]
+				},
 				"description": ""
 			},
 			"response": []
@@ -32,7 +60,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"first_name\": \"Dmitry\",\n\t\"last_name\": \"Born\",\n\t\"login\": \"dmitry@gmail.com\",\n\t\"password\": \"qwerty12345\"\n}"
+					"raw": "{\n\t\"first_name\": \"Dmitry\",\n\t\"last_name\": \"Born\",\n\t\"login\": \"dmitrycs3\",\n\t\"password\": \"qwerty\"\n}"
 				},
 				"description": ""
 			},
@@ -41,20 +69,15 @@
 		{
 			"name": "get /msg",
 			"request": {
-				"url": "",
+				"url": "http://127.0.0.1:8000/msg",
 				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "get /user",
-			"request": {
-				"url": "http://127.0.0.1:8000/user",
-				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1MzczNDAsInVpZCI6Mn0.EY9gOXeiMJ6bCD-fSqxijWAb6n9yVo4SMWNAMkPUano",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
@@ -63,12 +86,17 @@
 		{
 			"name": "patch /user",
 			"request": {
-				"url": "http://127.0.0.1:8000/user",
+				"url": "http://127.0.0.1:8000/user/2",
 				"method": "PATCH",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1NDEwNzAsInVpZCI6Mn0.hXgdlSI-J9mlZsER6gOuD2dMy5BWqKI2GYpQ3wqkUOs",
 						"description": ""
 					}
 				],
@@ -76,6 +104,23 @@
 					"mode": "raw",
 					"raw": "{\n\t\"first_name\": \"Andrew\",\n\t\"last_name\": \"Born2\"\n}"
 				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get /user",
+			"request": {
+				"url": "http://127.0.0.1:8000/user/dmitrycs22",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIxNzM5NTksInVpZCI6Mn0.dGTR-hf4RyWpF0ihnphPnPx16YgIGLlLp6NVqHNYbCc",
+						"description": ""
+					}
+				],
+				"body": {},
 				"description": ""
 			},
 			"response": []
@@ -90,22 +135,33 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1NDEwNzAsInVpZCI6Mn0.hXgdlSI-J9mlZsER6gOuD2dMy5BWqKI2GYpQ3wqkUOs",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"recipient\": \"dmitry@gmail.com\",\n\t\"message\": \"Hello, Dmitry. Сan you drop the link to the edits?\"\n}"
+					"raw": "{\n\t\"message\": \"Hello, dmitry\",\n\t\"recipient\": \"dmitrycs3\",\n\t\"file_ids\": [11,12]\n}"
 				},
 				"description": ""
 			},
 			"response": []
 		},
 		{
-			"name": "post /auth",
+			"name": "get /file/<file_id:int>",
 			"request": {
-				"url": "",
+				"url": "http://127.0.0.1:8000/files/1",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1NDQ1MTYsInVpZCI6M30.0cReKOS7SDCYb5nhuAcKG0MSkWoWG_v34LjThLcy4no",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
@@ -114,10 +170,44 @@
 		{
 			"name": "patch /msg/<message_id:int>",
 			"request": {
-				"url": "",
-				"method": "GET",
-				"header": [],
-				"body": {},
+				"url": "http://127.0.0.1:8000/msg/13",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1NDEwNzAsInVpZCI6Mn0.hXgdlSI-J9mlZsER6gOuD2dMy5BWqKI2GYpQ3wqkUOs",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"message\": \"new_message\",\n\t\"file_ids\": [8, 9, 10, 11, 12]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "post /auth",
+			"request": {
+				"url": "http://127.0.0.1:8000/auth",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"login\": \"dmitrycs3\",\n\t\"password\": \"qwerty\"\n}"
+				},
 				"description": ""
 			},
 			"response": []
@@ -125,9 +215,15 @@
 		{
 			"name": "delete /msg/<message_id:int>",
 			"request": {
-				"url": "",
-				"method": "GET",
-				"header": [],
+				"url": "http://127.0.0.1:8000/msg/14",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1NDQ1MTYsInVpZCI6M30.0cReKOS7SDCYb5nhuAcKG0MSkWoWG_v34LjThLcy4no",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
@@ -136,9 +232,15 @@
 		{
 			"name": "get /msg/<message_id:int>",
 			"request": {
-				"url": "",
+				"url": "http://127.0.0.1:8000/msg/13",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI1NDEwNzAsInVpZCI6Mn0.hXgdlSI-J9mlZsER6gOuD2dMy5BWqKI2GYpQ3wqkUOs",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},

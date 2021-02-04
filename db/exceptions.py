@@ -16,3 +16,19 @@ class DBUserNotExistsException(Exception):
 
 class DBMessageNotExistsException(Exception):
     pass
+
+
+class DBFileNotExistsException(Exception):
+    pass
+
+
+class DBMsgFileNotExistsException(Exception):
+    pass
+
+
+class DBResourceDeletedException(Exception):
+    pass
+
+
+class DBResourceOwnerException(Exception):
+    pass

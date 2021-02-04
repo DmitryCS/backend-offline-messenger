@@ -133,4 +133,5 @@ dmypy.json
 
 db.sqlite
 
-images
+raw_files
+raw

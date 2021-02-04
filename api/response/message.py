@@ -10,6 +10,7 @@ class MessageFields:
     created_at = fields.Str(required=True)
     updated_at = fields.Str(required=True)
     message = fields.Str(required=True)
+    file_ids = fields.List(fields.Int)
 
 
 class ResponseCreateMessageDtoSchema(Schema, MessageFields, Serialization):
@@ -28,7 +29,7 @@ class ResponseGetMessageDto(ResponseDto, ResponseGetMessageDtoSchema):
     __schema__ = ResponseGetMessageDtoSchema
 
 
-class ResponsePatchMessageDtoSchema(Schema):
+class ResponsePatchMessageDtoSchema(Schema, MessageFields, Serialization):
     pass
 
 

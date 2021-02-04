@@ -3,9 +3,8 @@ from typing import List
 from api.request import RequestCreateMessageDto
 from api.request.message import RequestPatchMessageDto
 from db.database import DBSession
-from db.exceptions import DBUserNotExistsException
+from db.exceptions import DBUserNotExistsException, DBMessageNotExistsException, DBResourceOwnerException
 from db.models.message import DBMessage
-from transport.sanic.exceptions import SanicUserConflictException, SanicDBException
 
 
 def create_message(session: DBSession, request_dto_message: RequestCreateMessageDto, user_id: int) -> DBMessage:
@@ -30,13 +29,15 @@ def get_messages(session: DBSession, user_id: int) -> List[DBMessage]:
     return list_messages
 
 
-def patch_message(session: DBSession, request_dto_message: RequestPatchMessageDto, message_id: int, user_id: int) -> DBMessage:
+def patch_message(
+        session: DBSession, request_dto_message: RequestPatchMessageDto, message_id: int, user_id: int
+) -> DBMessage:
 
     db_message = session.get_message_by_id(message_id)
-    if db_message.is_delete:
-        raise SanicDBException("Message deleted")
+    if db_message is None:
+        raise DBMessageNotExistsException
     if db_message.sender_id != user_id:
-        raise SanicUserConflictException("This is not your message")
+        raise DBResourceOwnerException
 
     for attr in request_dto_message.fields:
         value = getattr(request_dto_message, attr)
@@ -48,15 +49,18 @@ def patch_message(session: DBSession, request_dto_message: RequestPatchMessageDt
 def delete_message(session: DBSession, message_id: int, user_id: int) -> None:
 
     db_message = session.get_message_by_id(message_id)
-
+    if db_message is None:
+        raise DBMessageNotExistsException
     if db_message.sender_id != user_id:
-        raise SanicUserConflictException("This is not your message")
+        raise DBResourceOwnerException
 
     db_message.is_delete = True
 
 
-def get_message(session: DBSession, message_id: int) -> DBMessage:
+def get_message(session: DBSession, message_id: int, user_id: int) -> DBMessage:
 
-    message = session.get_message(message_id)
+    db_message = session.get_message(message_id)
+    if db_message is None:
+        raise DBMessageNotExistsException
 
-    return message
+    return db_message
