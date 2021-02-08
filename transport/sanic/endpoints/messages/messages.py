@@ -65,8 +65,8 @@ class MessagesEndpoint(BaseEndpoint):
     async def method_get(self, request: Request, body: dict, session: DBSession, *args, **kwargs) -> BaseHTTPResponse:
 
         db_messages = message_queries.get_messages(session, body['uid'])
-        for i in range(len(db_messages)):
-            db_messages[i].file_ids = file_queries.get_file_ids_by_msd_id(session, db_messages[i].id)
+        for message in db_messages:
+            message.file_ids = file_queries.get_file_ids_by_msd_id(session, message.id)
         response_model = ResponseGetMessageDto(db_messages, many=True)
 
         return await self.make_response_json(body=response_model.dump(), status=200)
